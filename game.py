@@ -27,7 +27,7 @@ black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (56, 123, 255)
-
+white = (255,255,255)
 # Round won messages.
 p1_scores = font_m.render("Player 1 scores !", True, red)
 p2_scores = font_m.render("Player 2 scores !", True, red)
@@ -95,11 +95,11 @@ c2_area.left = 1033
 c2_area.top = 280
 
 # Location of post 1
-g1_area.left = 35
+g1_area.right = 51
 g1_area.top = 257
 
 # Location of post 2
-g2_area.left = 1100
+g2_area.left = width - 51
 g2_area.top = 257
 
 speed = [1, 1]
@@ -132,9 +132,9 @@ def player_2_move():
 
 
 def ball_exit():
-    if ball_area.left < 0 or ball_area.right > width:
+    if ball_area.left < 50 or ball_area.right > width-50:
         speed[0] = -speed[0]
-    if ball_area.top < 0 or ball_area.bottom > height:
+    if ball_area.top < 50 or ball_area.bottom > height-50:
         speed[1] = -speed[1]
 
 
@@ -207,7 +207,7 @@ def playgame():
         # Score counting for player 1
         if g2_area.colliderect(ball_area):
             player1_score += 1
-            ground.blit(p1_scores, [450, 190])
+            ground.blit(p1_scores, [600, 190])
             ball_area.left = 500
             ball_area.top = 280
             c1_area.left = 160
@@ -231,8 +231,7 @@ def playgame():
             pygame.time.wait(2000)
 
         # Creating scoreboard
-        board1 = font_s.render("Player 1 : " + str(player1_score), True, black, blue)
-        board2 = font_s.render("Player 2 : " + str(player2_score), True, black, blue)
+        board1 = font_l.render(f"{player1_score}:{player2_score}", True, white)
 
         ball_area.move_ip(speed)
 
@@ -271,8 +270,7 @@ def playgame():
         ground.blit(goal2, g2_area)
         ground.blit(c1, c1_area)
         ground.blit(c2, c2_area)
-        ground.blit(board1, [50, 0])
-        ground.blit(board2, [1000, 0])
+        ground.blit(board1, [544, 30])
         ground.blit(ball, ball_area)
 
         pygame.display.update()
